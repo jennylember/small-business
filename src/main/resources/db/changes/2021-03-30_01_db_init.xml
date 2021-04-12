@@ -1,0 +1,222 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+
+    <changeSet author="jennylember" id="admin-seq">
+        <sql>
+            create sequence admin_seq START 1;
+        </sql>
+    </changeSet>
+
+    <changeSet author="jennylember" id="admin-init">
+        <sql>
+            create table if not exists admin (
+            id bigint not null,
+            telegram_id varchar(255) not null,
+            org_id bigint not null,
+            primary key(id)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet author="jennylember" id="client-seq">
+        <sql>
+            create sequence client_seq START 1;
+        </sql>
+    </changeSet>
+
+    <changeSet author="jennylember" id="client-init">
+        <sql>
+            create table if not exists client (
+            id bigint not null,
+            telegram_id varchar(255) not null,
+            primary key(id)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet author="jennylember" id="owner-seq">
+        <sql>
+            create sequence owner_seq START 1;
+        </sql>
+    </changeSet>
+
+    <changeSet author="jennylember" id="owner-init">
+        <sql>
+            create table if not exists owner (
+            id bigint not null,
+            telegram_id varchar(255) not null,
+            org_id bigint not null,
+            primary key(id)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet author="jennylember" id="organization-seq">
+        <sql>
+            create sequence organization_seq START 1;
+        </sql>
+    </changeSet>
+
+    <changeSet author="jennylember" id="organization-init">
+        <sql>
+            create table if not exists organization (
+            id bigint not null,
+            name varchar(255) not null,
+            primary key(id)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet author="jennylember" id="department-seq">
+        <sql>
+            create sequence department_seq START 1;
+        </sql>
+    </changeSet>
+
+    <changeSet author="jennylember" id="department-init">
+        <sql>
+            create table if not exists department (
+            id bigint not null,
+            name varchar(255) not null,
+            org_id bigint not null,
+            address varchar(255),
+            primary key(id)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet author="jennylember" id="service-seq">
+        <sql>
+            create sequence service_seq START 1;
+        </sql>
+    </changeSet>
+
+    <changeSet author="jennylember" id="service-init">
+        <sql>
+            create table if not exists service (
+            id bigint not null,
+            dep_id bigint not null,
+            name varchar(255) not null,
+            description varchar(255),
+            price decimal,
+            duration varchar(255),
+            primary key(id)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet author="jennylember" id="master-seq">
+        <sql>
+            create sequence master_seq START 1;
+        </sql>
+    </changeSet>
+
+    <changeSet author="jennylember" id="master-init">
+        <sql>
+            create table if not exists master (
+            id bigint not null,
+            name varchar(255) not null,
+            primary key(id)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet author="jennylember" id="master-to-service-seq">
+        <sql>
+            create sequence master_to_service_seq START 1;
+        </sql>
+    </changeSet>
+
+    <changeSet author="jennylember" id="master-to-service-init">
+        <sql>
+            create table if not exists master (
+            id bigint not null,
+            master_id bigint not null,
+            dep_id bigint not null,
+            primary key(id)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet author="jennylember" id="working-day-seq">
+        <sql>
+            create sequence working_day_seq START 1;
+        </sql>
+    </changeSet>
+
+    <changeSet author="jennylember" id="working-day-init">
+        <sql>
+            create table if not exists working_day (
+            id bigint not null,
+            master_id bigint not null,
+            date timestamp not null,
+            dep_id bigint not null,
+            primary key(id)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet author="jennylember" id="working-hour-seq">
+        <sql>
+            create sequence working_hour_seq START 1;
+        </sql>
+    </changeSet>
+
+    <changeSet author="jennylember" id="working-hour-init">
+        <sql>
+            create table if not exists working_hour (
+            id bigint not null,
+            working_day_id bigint not null,
+            time_from timestamp not null,
+            time_to timestamp not null,
+            primary key(id)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet author="jennylember" id="client-setting-seq">
+        <sql>
+            create sequence client_setting_seq START 1;
+        </sql>
+    </changeSet>
+
+    <changeSet author="jennylember" id="client-setting-init">
+        <sql>
+            create table if not exists client_setting (
+            id bigint not null,
+            client_id bigint not null,
+            default_dep_id bigint,
+            default_master_id bigint,
+            primary key(id)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet author="jennylember" id="event-seq">
+        <sql>
+            create sequence event_seq START 1;
+        </sql>
+    </changeSet>
+
+    <changeSet author="jennylember" id="event-init">
+        <sql>
+            create table if not exists event (
+            id bigint not null,
+            status varchar(255) not null,
+            org_id bigint not null,
+            dep_id bigint not null,
+            service_id bigint not null,
+            master_id bigint not null,
+            client_id bigint not null,
+            admin_id bigint not null,
+            start timestamp not null,
+            finish timestamp not null,
+            gmt_create timestamp not null,
+            gmt_update timestamp not null,
+            primary key(id)
+            );
+        </sql>
+    </changeSet>
+</databaseChangeLog>
