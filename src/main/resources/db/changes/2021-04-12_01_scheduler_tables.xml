@@ -1,0 +1,58 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+
+    <changeSet author="jennylember" id="scheduler-task-seq">
+        <sql>
+            create sequence scheduler_task_seq START 1;
+        </sql>
+    </changeSet>
+
+    <changeSet author="jennylember" id="scheduler-task-init">
+        <sql>
+            create table if not exists scheduler_task (
+                id bigint not null,
+                name varchar(255) not null,
+                job_class_name varchar(255) not null,
+                type varchar(255) not null,
+                status varchar(255) not null,
+                time_expression varchar(255) not null,
+                context varchar(255) not null,
+                failure_retry_times int not null,
+                failure_retry_interval_mills bigint null,
+                gmt_create timestamp not null,
+                gmt_update timestamp not null,
+                primary key(id)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet author="jennylember" id="scheduler-task-execution-seq">
+        <sql>
+            create sequence scheduler_task_execution_seq START 1;
+        </sql>
+    </changeSet>
+
+    <changeSet author="jennylember" id="scheduler-task-execution-init">
+        <sql>
+            create table if not exists scheduler_task_execution (
+                id bigint not null,
+                task_id bigint not null,
+                execution_start_instant timestamp not null,
+                execution_finish_instant timestamp not null,
+                status varchar(255) not null,
+                details varchar(255) null,
+                server_ip varchar(255) null,
+                gmt_create timestamp not null,
+                gmt_update timestamp not null,
+                primary key(id),
+                constraint fk_task
+                    foreign key(task_id)
+                        references scheduler_task(id)
+                        on delete cascade
+            );
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

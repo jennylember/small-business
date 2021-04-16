@@ -5,4 +5,5 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.0.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
 
     <include relativeToChangelogFile="true" file="changes/2021-03-30_01_db_init.xml"/>
+    <include relativeToChangelogFile="true" file="changes/2021-04-12_01_scheduler_tables.xml"/>
 </databaseChangeLog>
